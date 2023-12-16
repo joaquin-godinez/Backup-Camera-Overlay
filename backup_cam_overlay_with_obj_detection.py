@@ -55,7 +55,7 @@ def Obj_detection(frame, model, input_size):
     print("Inference completed!")
 
     # Post-processing
-    pred = non_max_suppression(pred, conf_thres=0.3, iou_thres=0.4)[0]
+    pred = non_max_suppression(pred, conf_thres=0.5, iou_thres=0.4)[0]
     obj_frame = frame.astype(np.uint8)
     return pred, obj_frame
 
@@ -162,7 +162,7 @@ def backup_overlay_with_obj_detect(video_path):
                 color = (0, 255, 0)  # Green color for bounding boxes
                 cv2.rectangle(frame, (int(xmin*2), int(ymin*1.5)), (int(xmax*2), int(ymax*1.5)), color, 2) # the coefficients in the xmax and ymax account for the frame size difference converts 640x480 to 1280x720
                 
-                cv2.putText(frame, f"{class_names[int(cls)]} {conf:.2f}", (int(xmin), int(ymin) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                cv2.putText(frame, f"{class_names[int(cls)]} {conf:.2f}", (int(xmin*2), int(ymin*1.5) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2) #the coefficients in the xmax and ymax account for the frame size difference converts 640x480 to 1280x720
 
         # Draw the lines on the frame
         color = (0, 255, 0)  # Green color in BGR format
@@ -201,7 +201,9 @@ def backup_overlay_with_obj_detect(video_path):
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    # video_path = r"C:\Users\joaqu\OneDrive\Pictures\Camera Roll\WIN_20231201_16_43_49_Pro.mp4"  # Change this to your input video file
+    #--------------------------------------------------------------------------------------------------------------------------------------
+    video_path = r"C:\Users\joaqu\OneDrive\Pictures\Camera Roll\WIN_20231215_14_26_30_Pro.mp4"  # Change this to your input video file
+    #--------------------------------------------------------------------------------------------------------------------------------------
     backup_overlay_with_obj_detect(video_path)
     
 
